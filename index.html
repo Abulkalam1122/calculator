@@ -1,12 +1,12 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Abul Kalam Calculator</title>
     
-    <!-- আপনার ছবিটি সরাসরি অ্যাপের আইকন (Manifest) হিসেবে যুক্ত করা হলো -->
-    <link rel="manifest" href="data:application/json;base64,ewogICAibmFtZSI6ICJBYnVsIEthbGFtIENhbGN1bGF0b3IiLAogICAic2hvcnRfbmFtZSI6ICJBYnVsIiwKICAgInN0YXJ0X3VybCI6ICIuL2luZGV4Lmh0bWwiLAogICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgICJ0aGVtZV9jb2xvciI6ICIjZDkzMDI1IiwKICAiaWNvbnMiOiBbIHsKICAgICJzcmMiOiAiaHR0cHM6Ly9pLmltZ3VyLmNvbS95b3VyLWltYWdlLWxpbmsucG5nIiwKICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIsCiAgICAicHVycG9zZSI6ICJoeW5jaCBtYXNrYWJsZSIKICAg fV0KfQ==">
+    <!-- আপনার ছবিটি সরাসরি অ্যাপের আইকন হিসেবে এখানে যুক্ত করা হলো -->
+    <link rel="manifest" href="data:application/json;base64,ewogICAibmFtZSI6ICJBYnVsIEthbGFtIENhbGN1bGF0b3IiLAogICAic2hvcnRfbmFtZSI6ICJBYnVsIiwKICAgInN0YXJ0X3VybCI6ICIuL2luZGV4Lmh0bWwiLAogICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgICJ0aGVtZV9jb2xvciI6ICIjZDkzMDI1IiwKICAiaWNvbnMiOiBbIHsKICAgICJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGV2Um93QlJsRFpoREFIUU5CdW5yVkFBREZBRkJBSUJBSUJBSEFFQUFBQUFBRUFDSUFBQUFBTUFCQUFBQUFnQUFCQUFBQUFvQUFCQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQyIsCiAgICAic2l6ZXMiOiAiMTkyLzE5MiIsCiAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgfV0KfQ==">
 
     <style>
         body {
@@ -32,7 +32,7 @@
             height: 24px;
         }
         
-        /* ক্যালকুলেটরের ভেতরের স্ক্রিন ব্যাকগ্রাউন্ডে আপনার ছবি সেট করা হলো */
+        /* ক্যালকুলেটরের ভেতরের স্ক্রিন ব্যাকগ্রাউন্ড */
         #result-container {
             position: relative;
             display: flex;
@@ -44,7 +44,7 @@
             background-position: center;
         }
         
-        /* ছবির উপরে হালকা ওভারলে যাতে নাম্বার এবং লেখা স্পষ্ট দেখা যায় */
+        /* ছবির উপরে হালকা ওভারলে যাতে নাম্বার স্পষ্ট দেখা যায় */
         #result-container::before {
             content: '';
             position: absolute;
