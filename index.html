@@ -2,233 +2,50 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Abul Kalam Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Calculator</title>
+    <!-- অ্যাপ হিসেবে কাজ করার জন্য -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlJlZCBDYWxjdWxhdG9yIiwKICAic2hvcnRfbmFtZSI6ICJDb2xjIiwKICAic3RhcnRfdXJsIjogIi4vaW5kZXguaHRtbCIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgInRoZW1lX2NvbG9yIjogIiNkOTMwMjUiLAogICJpY29ucyI6IFsgewogICAgInNyYyI6ICJodHRwczovL2Nkbi1pY29ucy1wbmcuZmxhdGljb24uY29tLzUxMi81NjQvNTY0NDE5LnBuZyIsCiAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgfV0KfQ==">
     
-    <!-- আপনার ছবিটি সরাসরি অ্যাপের আইকন হিসেবে এখানে যুক্ত করা হলো -->
-    <link rel="manifest" href="data:application/json;base64,ewogICAibmFtZSI6ICJBYnVsIEthbGFtIENhbGN1bGF0b3IiLAogICAic2hvcnRfbmFtZSI6ICJBYnVsIiwKICAgInN0YXJ0X3VybCI6ICIuL2luZGV4Lmh0bWwiLAogICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgICJ0aGVtZV9jb2xvciI6ICIjZDkzMDI1IiwKICAiaWNvbnMiOiBbIHsKICAgICJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGV2Um93QlJsRFpoREFIUU5CdW5yVkFBREZBRkJBSUJBSUJBSEFFQUFBQUFBRUFDSUFBQUFBTUFCQUFBQUFnQUFCQUFBQUFvQUFCQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQ0FBQUFBQUFBQyIsCiAgICAic2l6ZXMiOiAiMTkyLzE5MiIsCiAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgfV0KfQ==">
-
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            height: 100vh;
-            margin: 0;
-            background-color: #fff;
-            font-family: Google Sans, Roboto, Arial, sans-serif;
-            color: #202124;
-        }
-        .top-icons {
-            display: flex;
-            justify-content: flex-end;
-            padding: 16px;
-            gap: 24px;
-            color: #5f6368;
-            background: rgba(255, 255, 255, 0.8);
-        }
-        .top-icons svg {
-            width: 24px;
-            height: 24px;
-        }
-        
-        /* ক্যালকুলেটরের ভেতরের স্ক্রিন ব্যাকগ্রাউন্ড */
-        #result-container {
-            position: relative;
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-end;
-            min-height: 160px;
-            background-image: url('4305.png'); 
-            background-size: cover;
-            background-position: center;
-        }
-        
-        /* ছবির উপরে হালকা ওভারলে যাতে নাম্বার স্পষ্ট দেখা যায় */
-        #result-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.65);
-            z-index: 1;
-        }
-
-        #result {
-            font-size: 57px;
-            text-align: right;
-            padding: 32px 24px;
-            word-wrap: break-word;
-            word-break: break-all;
-            min-height: 80px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-end;
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            padding: 8px;
-            background: #fff;
-        }
-        button {
-            height: 70px;
-            font-size: 32px;
-            border: none;
-            border-radius: 36px;
-            background-color: #f8f9fa;
-            cursor: pointer;
-            color: #202124;
-            transition: background-color 0.2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        button:active {
-            background-color: #dadce0;
-        }
-        .btn-num, .btn-op {
-            background-color: #fff9f9;
-            color: #d93025;
-        }
-        .btn-num:active, .btn-op:active {
-            background-color: #ffeded;
-        }
-        .btn-op {
-            font-size: 36px;
-        }
-        .btn-equal {
-            background-color: #d93025;
-            color: white;
-            grid-column: span 1;
-        }
-        .btn-equal:active {
-            background-color: #b3261a;
-        }
-        .material-icons {
-            font-family: 'Material Icons';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 28px;
-            display: inline-block;
-            line-height: 1;
-            text-transform: none;
-            letter-spacing: normal;
-            word-wrap: normal;
-            white-space: nowrap;
-            direction: ltr;
-            -webkit-font-smoothing: antialiased;
-        }
-        .btn-op .material-icons {
-             color: #d93025;
-        }
-        .btn-equal .material-icons {
-            color: white;
-        }
-        .bottom-space {
-            height: 28px;
-            background-color: #fff;
-        }
-        .red-text { color: #d93025; }
-        .blue-text { color: #1a73e8; }
+        /* আপনার পুরনো ক্যালকুলেটরের ডিজাইন */
+        body { display: flex; flex-direction: column; justify-content: flex-end; height: 100vh; margin: 0; background-color: #fff; font-family: sans-serif; }
+        #result { font-size: 50px; text-align: right; padding: 20px; color: #202124; }
+        .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
+        button { height: 70px; font-size: 25px; border: none; border-radius: 35px; background: #f8f9fa; color: #d93025; }
+        .equal { background: #d93025; color: white; }
     </style>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-
-    <div class="top-icons">
-        <svg class="blue-text" focusable="false" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></svg>
-        <svg class="blue-text" focusable="false" viewBox="0 0 24 24"><path d="M21 4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM6 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0-6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm12 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0-6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-5 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0-6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"></path></svg>
-        <svg class="blue-text" focusable="false" viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.4-2.4c.5-.5.5-1.1 0-1.6z"></path></svg>
-    </div>
-
-    <div id="result-container">
-        <div id="result">0</div>
-    </div>
-
+    <div id="result">0</div>
     <div class="buttons">
-        <button class="btn-op red-text" onclick="clearScreen()">C</button>
-        <button class="btn-op red-text" onclick="appendValue('%')">%</button>
-        <button class="btn-op blue-text" onclick="backspace()"><span class="material-icons">backspace</span></button>
-        <button class="btn-op blue-text" onclick="appendValue('/')"><span class="material-icons">divide</span></button>
-        
-        <button class="btn-num" onclick="appendValue('7')">7</button>
-        <button class="btn-num" onclick="appendValue('8')">8</button>
-        <button class="btn-num" onclick="appendValue('9')">9</button>
-        <button class="btn-op blue-text" onclick="appendValue('*')"><span class="material-icons">close</span></button>
-        
-        <button class="btn-num" onclick="appendValue('4')">4</button>
-        <button class="btn-num" onclick="appendValue('5')">5</button>
-        <button class="btn-num" onclick="appendValue('6')">6</button>
-        <button class="btn-op blue-text" onclick="appendValue('-')"><span class="material-icons">remove</span></button>
-        
-        <button class="btn-num" onclick="appendValue('1')">1</button>
-        <button class="btn-num" onclick="appendValue('2')">2</button>
-        <button class="btn-num" onclick="appendValue('3')">3</button>
-        <button class="btn-op blue-text" onclick="appendValue('+')"><span class="material-icons">add</span></button>
-
-        <button class="btn-num" onclick="appendValue('00')">00</button>
-        <button class="btn-num" onclick="appendValue('0')">0</button>
-        <button class="btn-num" onclick="appendValue('.')">.</button>
-        <button class="btn-equal" onclick="calculate()"><span class="material-icons">drag_handle</span></button>
+        <button onclick="clearScreen()">C</button>
+        <button onclick="appendValue('%')">%</button>
+        <button onclick="backspace()">DEL</button>
+        <button onclick="appendValue('/')">÷</button>
+        <button onclick="appendValue('7')">7</button>
+        <button onclick="appendValue('8')">8</button>
+        <button onclick="appendValue('9')">9</button>
+        <button onclick="appendValue('*')">×</button>
+        <button onclick="appendValue('4')">4</button>
+        <button onclick="appendValue('5')">5</button>
+        <button onclick="appendValue('6')">6</button>
+        <button onclick="appendValue('-')">-</button>
+        <button onclick="appendValue('1')">1</button>
+        <button onclick="appendValue('2')">2</button>
+        <button onclick="appendValue('3')">3</button>
+        <button onclick="appendValue('+')">+</button>
+        <button onclick="appendValue('00')">00</button>
+        <button onclick="appendValue('0')">0</button>
+        <button onclick="appendValue('.')">.</button>
+        <button class="equal" onclick="calculate()">=</button>
     </div>
-    
-    <div class="bottom-space"></div>
-
     <script>
-        let resultField = document.getElementById('result');
-
-        function appendValue(val) {
-            if (resultField.innerText === '0' && val !== '.') {
-                resultField.innerText = val;
-            } else {
-                resultField.innerText += val;
-            }
-        }
-
-        function clearScreen() {
-            resultField.innerText = '0';
-        }
-
-        function backspace() {
-            let currentText = resultField.innerText;
-            if (currentText.length > 1) {
-                resultField.innerText = currentText.slice(0, -1);
-            } else {
-                resultField.innerText = '0';
-            }
-        }
-
-        function calculate() {
-            try {
-                let expression = resultField.innerText
-                    .replace(/×/g, '*')
-                    .replace(/÷/g, '/');
-                
-                if (/^[0-9+\-*/.%()]*$/.test(expression)) {
-                    let evaluated = eval(expression);
-                    resultField.innerText = parseFloat(evaluated.toFixed(10)).toString();
-                } else {
-                    resultField.innerText = 'Error';
-                }
-            } catch (error) {
-                resultField.innerText = 'Error';
-            }
-        }
-
-        document.querySelector('.btn-op.blue-text:nth-child(4) span').innerText = '÷'; 
-        document.querySelector('.btn-op.blue-text:nth-child(8) span').innerText = '×';
-        document.querySelector('.btn-op.blue-text:nth-child(12) span').innerText = '−';
-        document.querySelector('.btn-op.blue-text:nth-child(16) span').innerText = '+';
-        document.querySelector('.btn-equal span').innerText = '=';
+        let res = document.getElementById('result');
+        function appendValue(v) { res.innerText = (res.innerText === '0') ? v : res.innerText + v; }
+        function clearScreen() { res.innerText = '0'; }
+        function backspace() { res.innerText = (res.innerText.length > 1) ? res.innerText.slice(0, -1) : '0'; }
+        function calculate() { try { res.innerText = eval(res.innerText.replace('×', '*').replace('÷', '/')); } catch { res.innerText = 'Error'; } }
     </script>
 </body>
 </html>
