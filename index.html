@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>MKR Calculator</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; margin: 0; font-family: sans-serif; }
+        .calculator { background-color: #333; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); }
+        .calc-title { color: white; font-size: 20px; text-align: center; margin-bottom: 10px; font-weight: bold; }
+        #result { width: 100%; height: 50px; background-color: #fff; font-size: 24px; text-align: right; margin-bottom: 15px; border: none; border-radius: 5px; padding: 5px; box-sizing: border-box; }
+        .buttons { display: grid; grid-template-columns: repeat(4, 60px); gap: 10px; }
+        button { height: 60px; font-size: 20px; cursor: pointer; background-color: #e0e0e0; border: none; border-radius: 5px; transition: 0.2s; }
+        button:hover { background-color: #d4d4d4; }
+        .btn-equal { grid-row: span 2; height: 130px; background-color: #ff9800; color: white; }
+        .btn-equal:hover { background-color: #e68900; }
+        .btn-clear { background-color: #f44336; color: white; }
+        .btn-clear:hover { background-color: #d32f2f; }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <div class="calc-title">MKR</div>
+        <input type="text" id="result" readonly>
+        <div class="buttons">
+            <button onclick="clearScreen()" class="btn-clear">C</button>
+            <button onclick="appendValue('/')">/</button>
+            <button onclick="appendValue('*')">*</button>
+            <button onclick="appendValue('-')">-</button>
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button onclick="appendValue('+')">+</button>
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button onclick="calculate()" class="btn-equal">=</button>
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button onclick="appendValue('0')" style="grid-column: span 2;">0</button>
+            <button onclick="appendValue('.')">.</button>
+        </div>
+    </div>
+
+    <script>
+        const resultField = document.getElementById('result');
+        function appendValue(value) { resultField.value += value; }
+        function clearScreen() { resultField.value = ''; }
+        function calculate() {
+            try { resultField.value = eval(resultField.value); } 
+            catch (error) { resultField.value = 'Error'; }
+        }
+    </script>
+</body>
+</html>
