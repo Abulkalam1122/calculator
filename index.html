@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Red Calculator</title>
+    
+    <!-- অ্যাপ হিসেবে ডাউনলোড বা হোম স্ক্রিনে অ্যাড করার অপশন -->
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlJlZCBDYWxjdWxhdG9yIiwKICAic2hvcnRfbmFtZSI6ICJDb2xjIiwKICAic3RhcnRfdXJsIjogIi4vaW5kZXguaHRtbCIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgInRoZW1lX2NvbG9yIjogIiNkOTMwMjUiLAogICJpY29ucyI6IFsgewogICAgInNyYyI6ICJodHRwczovL2Nkbi1pY29ucy1wbmcuZmxhdGljb24uY29tLzUxMi81NjQvNTY0NDE5LnBuZyIsCiAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgfV0KfQ==">
 
+    <style>
+        body {
+            display: flex;
             flex-direction: column;
             justify-content: flex-end;
             height: 100vh;
@@ -109,7 +114,7 @@
         
         /* Helper classes */
         .red-text { color: #d93025; }
-        .blue-text { color: #1a73e8; } /* Keep some for specific functions like history icon */
+        .blue-text { color: #1a73e8; }
     </style>
     <!-- Material Icons for symbols like backspace -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -128,7 +133,7 @@
         <button class="btn-op red-text" onclick="clearScreen()">C</button>
         <button class="btn-op red-text" onclick="appendValue('%')">%</button>
         <button class="btn-op blue-text" onclick="backspace()"><span class="material-icons">backspace</span></button>
-        <button class="btn-op blue-text" onclick="appendValue('/')"><span class="material-icons">divide</span></button> <!-- Using text as fallback for icon -->
+        <button class="btn-op blue-text" onclick="appendValue('/')"><span class="material-icons">divide</span></button>
         
         <button class="btn-num" onclick="appendValue('7')">7</button>
         <button class="btn-num" onclick="appendValue('8')">8</button>
@@ -148,14 +153,13 @@
         <button class="btn-num" onclick="appendValue('00')">00</button>
         <button class="btn-num" onclick="appendValue('0')">0</button>
         <button class="btn-num" onclick="appendValue('.')">.</button>
-        <button class="btn-equal" onclick="calculate()"><span class="material-icons">drag_handle</span></button> <!-- Or "=" symbol -->
+        <button class="btn-equal" onclick="calculate()"><span class="material-icons">drag_handle</span></button>
     </div>
     
     <div class="bottom-space"></div>
 
     <script>
         let resultField = document.getElementById('result');
-        let currentExpression = "";
 
         function appendValue(val) {
             if (resultField.innerText === '0' && val !== '.') {
@@ -180,15 +184,12 @@
 
         function calculate() {
             try {
-                // Replace 'x' with '*' and '÷' with '/' for eval
                 let expression = resultField.innerText
                     .replace(/×/g, '*')
                     .replace(/÷/g, '/');
                 
-                // Basic security check to prevent malicious code injection
                 if (/^[0-9+\-*/.%()]*$/.test(expression)) {
                     let evaluated = eval(expression);
-                    // Handle large numbers or decimals if necessary
                     resultField.innerText = parseFloat(evaluated.toFixed(10)).toString();
                 } else {
                     resultField.innerText = 'Error';
@@ -198,37 +199,11 @@
             }
         }
 
-        // Basic keyboard support
-        document.addEventListener('keydown', function(event) {
-            const key = event.key;
-            if (/[0-9]/.test(key)) {
-                appendValue(key);
-            } else if (key === '+' || key === '-' || key === '*' || key === '/' || key === '.') {
-                appendValue(key);
-            } else if (key === 'Enter' || key === '=') {
-                calculate();
-            } else if (key === 'Backspace') {
-                backspace();
-            } else if (key === 'Escape') {
-                clearScreen();
-            } else if (key === '%') {
-                appendValue('%');
-            }
-        });
-        
-        // Replace text symbols with proper Material Icons for display if available
-        // Note: Some icons might need specific unicode mapping based on the font version.
-        // The provided code uses basic text representation which will work on all devices.
-        // If you want exact icons, ensure you have Material Icons loaded and use correct spans.
-        // For example, for divide: <span class="material-icons">calculate</span> (symbol isn't direct)
-        // This version uses simple text symbols in spans for clarity:
         document.querySelector('.btn-op.blue-text:nth-child(4) span').innerText = '÷'; 
         document.querySelector('.btn-op.blue-text:nth-child(8) span').innerText = '×';
         document.querySelector('.btn-op.blue-text:nth-child(12) span').innerText = '−';
         document.querySelector('.btn-op.blue-text:nth-child(16) span').innerText = '+';
         document.querySelector('.btn-equal span').innerText = '=';
-
     </script>
-
 </body>
 </html>
