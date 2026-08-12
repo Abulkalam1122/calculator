@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Red Calculator</title>
+    <title>MKR Calculator</title>
     
     <!-- অ্যাপ হিসেবে ডাউনলোড বা হোম স্ক্রিনে অ্যাড করার অপশন -->
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlJlZCBDYWxjdWxhdG9yIiwKICAic2hvcnRfbmFtZSI6ICJDb2xjIiwKICAic3RhcnRfdXJsIjogIi4vaW5kZXguaHRtbCIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgInRoZW1lX2NvbG9yIjogIiNkOTMwMjUiLAogICJpY29ucyI6IFsgewogICAgInNyYyI6ICJodHRwczovL2Nkbi1pY29ucy1wbmcuZmxhdGljb24uY29tLzUxMi81NjQvNTY0NDE5LnBuZyIsCiAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgfV0KfQ==">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk1LUiBDYWxjdWxhdG9yIiwKICAic2hvcnRfbmFtZSI6ICJNS1IiLAogICJzdGFydF91cmwiOiAiLi9pbmRleC5odG1sIiwKICAic2lwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmZmZmZmYiLAogICJ0aGVtZV9jb2xvciI6ICIjZDkzMDI1IiwKICAiaWNvbnMiOiBbIHsKICAgICJzcmMiOiAiaHR0cHM6Ly9jZG4taWNvbnMtcG5nLmZsYXRpY29uLmNvbS81MTIvNTY0LzU2NDQxOS5wbmciLAogICAgInNpemVzIjogIjE5MngxOTIiLAogICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogIH1dCn0=">
 
     <style>
         body {
@@ -30,6 +30,27 @@
             width: 24px;
             height: 24px;
         }
+        
+        /* স্ক্রিনের ব্যাকগ্রাউন্ডে MKR ওয়াটারমার্ক স্টাইল */
+        #result-container {
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            min-height: 120px;
+        }
+        #bg-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 70px;
+            font-weight: bold;
+            color: rgba(217, 48, 37, 0.08); /* হালকা লাল জলছাপ */
+            pointer-events: none;
+            user-select: none;
+            z-index: 1;
+        }
         #result {
             font-size: 57px;
             text-align: right;
@@ -40,7 +61,12 @@
             display: flex;
             align-items: flex-end;
             justify-content: flex-end;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            box-sizing: border-box;
         }
+
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -127,7 +153,11 @@
         <svg class="blue-text" focusable="false" viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.4-2.4c.5-.5.5-1.1 0-1.6z"></path></svg>
     </div>
 
-    <div id="result">0</div>
+    <!-- স্ক্রিনের ভেতরে ব্যাকগ্রাউন্ডে নাম যুক্ত করা হলো -->
+    <div id="result-container">
+        <div id="bg-watermark">MKR</div>
+        <div id="result">0</div>
+    </div>
 
     <div class="buttons">
         <button class="btn-op red-text" onclick="clearScreen()">C</button>
@@ -207,3 +237,4 @@
     </script>
 </body>
 </html>
+
